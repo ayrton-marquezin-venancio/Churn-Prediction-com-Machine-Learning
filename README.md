@@ -47,7 +47,7 @@ A base possui:
 
 O identificador `Cliente_ID` é removido antes do treinamento por não possuir significado preditivo.
 
-📖 O significado de cada coluna está em [`docs/data_dictionary.md`](docs/data_dictionary.md).
+📖 O significado de cada coluna está em data_dictionary.md
 
 ---
 
