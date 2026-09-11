@@ -1,16 +1,16 @@
 # 📉 Customer Churn Prediction com Machine Learning
 
-Projeto de **Machine Learning para classificação de churn de clientes**, desenvolvido em Python com foco em preparação de dados, prevenção de vazamento, construção de pipelines e comparação entre modelos.
+Projeto de **Machine Learning para classificação de churn de clientes**, desenvolvido em Python com foco em preparação de dados, prevenção de vazamento de informações, construção de pipelines e comparação entre modelos de classificação.
 
 O objetivo é prever se um cliente tende a **permanecer (`Não`)** ou **sair (`Sim`)** a partir de características contratuais, financeiras e comportamentais.
 
-> **Observação:** o dataset é sintético e foi criado exclusivamente para fins educacionais. Os resultados não representam uma empresa real.
+> **Observação:** o dataset utilizado é sintético e foi criado exclusivamente para fins educacionais. Os resultados não representam uma empresa real e não devem ser interpretados como um modelo pronto para produção.
 
 ---
 
 ## 🎯 Objetivo do projeto
 
-Construir e comparar modelos capazes de classificar clientes em relação ao churn, seguindo um fluxo reproduzível de Machine Learning:
+Construir e comparar modelos capazes de identificar clientes com maior probabilidade de churn, seguindo um fluxo reproduzível de Machine Learning:
 
 ```text
 Base de dados
@@ -38,16 +38,20 @@ Avaliação e comparação
 
 A base possui:
 
-- **1,500 clientes**
+- **1.500 clientes**
 - **18 colunas**
-- **539 clientes com churn (35.93%)**
-- **961 clientes sem churn (64.07%)**
+- **539 clientes com churn (35,93%)**
+- **961 clientes sem churn (64,07%)**
 - variáveis numéricas, ordinais e categóricas
 - valores ausentes propositalmente incluídos para prática de tratamento
 
 O identificador `Cliente_ID` é removido antes do treinamento por não possuir significado preditivo.
 
-📖 O significado de cada coluna está em data_dictionary.md
+### 📁 Arquivos principais
+
+- [📊 Base de dados — customer_churn_ml.csv](customer_churn_ml.csv)
+- [📖 Dicionário de dados](data_dictionary.md)
+- [📓 Notebook completo — churn_modeling.ipynb](churn_modeling.ipynb)
 
 ---
 
@@ -92,6 +96,8 @@ O preenchimento é aprendido **somente no conjunto de treino**, reduzindo risco 
 
 ### 4. Codificação das variáveis categóricas
 
+As variáveis em texto são transformadas com:
+
 ```python
 OneHotEncoder(handle_unknown="ignore")
 ```
@@ -110,6 +116,10 @@ Isso reduz o risco de aplicar transformações diferentes entre treino, teste e 
 
 ### Logistic Regression
 
+A regressão logística foi utilizada como modelo linear de classificação.
+
+Pipeline:
+
 ```text
 Pré-processamento
       ↓
@@ -119,6 +129,10 @@ LogisticRegression
 ```
 
 ### Random Forest
+
+A floresta aleatória combina várias árvores de decisão e consegue representar relações não lineares.
+
+Pipeline:
 
 ```text
 Pré-processamento
@@ -141,11 +155,11 @@ A regra simples de sempre prever a classe majoritária alcançaria **64,00% de a
 
 ### Comparação dos modelos
 
-![Comparação dos modelos](assets/model_metrics.png)
+![Comparação dos modelos](model_metrics.png)
 
 ### Matriz de confusão — Logistic Regression
 
-![Matriz de confusão — Logistic Regression](assets/confusion_matrix_logistic.png)
+![Matriz de confusão — Logistic Regression](confusion_matrix_logistic.png)
 
 No conjunto de teste:
 
@@ -166,9 +180,9 @@ Embora os dois modelos tenham alcançado a mesma accuracy, a regressão logísti
 - maior **F1-score**
 - quatro churns adicionais identificados
 
-A Random Forest apresentou maior **precision**.
+A Random Forest apresentou maior **precision**, ou seja, uma proporção maior dos clientes sinalizados como churn realmente pertencia à classe positiva.
 
-A escolha do melhor modelo depende do custo dos erros para o negócio.
+Não existe, portanto, um modelo universalmente melhor neste experimento. A escolha depende do custo dos erros para o negócio.
 
 ---
 
@@ -176,16 +190,18 @@ A escolha do melhor modelo depende do custo dos erros para o negócio.
 
 - O dataset é **sintético**.
 - Apenas dois algoritmos foram comparados.
-- Foi utilizada uma única divisão treino/teste.
+- A comparação atual utiliza uma única divisão treino/teste.
 - Não foi realizada validação cruzada.
 - Não houve ajuste de hiperparâmetros.
 - O limiar padrão de classificação não foi otimizado.
 - Ambos os modelos identificaram menos da metade dos churns reais.
-- Os resultados são educacionais e não devem ser interpretados como desempenho pronto para produção.
+- Os resultados são educacionais e **não devem ser interpretados como desempenho pronto para produção**.
 
 ---
 
 ## 🚀 Próximos passos
+
+Possíveis evoluções:
 
 - aplicar `StratifiedKFold` e validação cruzada;
 - analisar ROC-AUC;
@@ -225,26 +241,17 @@ A escolha do melhor modelo depende do custo dos erros para o negócio.
 
 ---
 
-## 📂 Estrutura do repositório
+## 📂 Estrutura atual do repositório
 
 ```text
 Customer-Churn-Prediction-com-Machine-Learning/
 │
-├── assets/
-│   ├── confusion_matrix_logistic.png
-│   └── model_metrics.png
-│
-├── data/
-│   └── customer_churn_ml.csv
-│
-├── docs/
-│   └── data_dictionary.md
-│
-├── notebooks/
-│   └── churn_modeling.ipynb
-│
-├── .gitignore
 ├── README.md
+├── churn_modeling.ipynb
+├── customer_churn_ml.csv
+├── data_dictionary.md
+├── model_metrics.png
+├── confusion_matrix_logistic.png
 └── requirements.txt
 ```
 
@@ -280,7 +287,7 @@ pip install -r requirements.txt
 ### 4. Abra o notebook
 
 ```bash
-jupyter notebook notebooks/churn_modeling.ipynb
+jupyter notebook churn_modeling.ipynb
 ```
 
 Execute as células em ordem.
